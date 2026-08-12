@@ -1,0 +1,55 @@
+# Terraria Server
+
+## 1. 简述
+
+泰拉瑞亚原版服务器
+
+**可用版本：**
+
+| 游戏模式       | 镜像 tag |
+| -------------- | -------- |
+| 原版最新正式版 | `latest` |
+
+## 2. 资源占用信息
+
+### 2.1. 端口
+
+| 端口号 | 协议 | 说明         |
+| ------ | ---- | ------------ |
+| 7777   | TCP  | 游戏联机端口 |
+
+### 2.2. 持久卷
+
+| 容器路径     | 说明         |
+| ------------ | ------------ |
+| `/app/world` | 游戏世界存档 |
+
+## 3. 构建与运行
+
+### 3.1. 构建并运行（Docker）
+
+```bash
+docker build -t terraria:temp . && \
+    docker run --rm -it \
+        -p 7777:7777/tcp \
+        -v ./world:/app/world \
+        terraria:temp
+```
+
+### 3.2. 运行服务器（Podman）
+
+```bash
+IMAGE=ghcr.io/hm-gamesrv/terraria:latest
+
+if ! podman pull "$IMAGE"; then
+    exit 1
+fi
+
+podman run --rm -it \
+    --name terraria \
+    --userns keep-id \
+    --network pasta \
+    -p 7777:7777/tcp \
+    -v ./world:/app/world \
+    "$IMAGE"
+```
