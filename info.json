@@ -1,0 +1,57 @@
+{
+    "schemaVersion": 1,
+    "key": "terraria",
+    "name": "Terraria",
+    "registries": {
+        "ghcr": "ghcr.io/hm-gamesrv/",
+        "aliyun": "crpi-i9e7zrpnu4792a5m.cn-chengdu.personal.cr.aliyuncs.com/hiromuraki/"
+    },
+    "resources": {
+        "ports": [
+            {
+                "host": "7777",
+                "container": "7777",
+                "proto": "tcp",
+                "required": true,
+                "desc": "游戏联机端口"
+            }
+        ],
+        "volumes": [],
+        "env": [],
+        "extraArgs": ""
+    },
+    "variants": [
+        {
+            "key": "official",
+            "name": "官方原版",
+            "tag": "latest",
+            "container": "terraria",
+            "resources": {
+                "volumes": [
+                    {
+                        "host": "./world",
+                        "container": "/app/world",
+                        "required": true,
+                        "desc": "游戏世界存档"
+                    }
+                ]
+            }
+        },
+        {
+            "key": "tshock",
+            "name": "TShock 插件服",
+            "tag": "tshock-latest",
+            "container": "terraria-tshock",
+            "resources": {
+                "volumes": [
+                    {
+                        "host": "./tshock",
+                        "container": "/app/tshock",
+                        "required": true,
+                        "desc": "TShock 配置与存档"
+                    }
+                ]
+            }
+        }
+    ]
+}
