@@ -1,11 +1,12 @@
-name: Build and Push Docker Image (1.4.5.6)
+name: Build and Push Docker Image
 
 on:
     push:
         branches:
             - main
         paths:
-            - "1.4.5.6/**"
+            - "vanilla-1.4.5.8/**"
+            - "tshock-1.4.5.6/**"
             - ".github/workflows/build-and-push-docker-image.yml"
     workflow_dispatch:
 
@@ -64,9 +65,9 @@ jobs:
                   push: true
                   provenance: false
                   tags: |
-                      ghcr.io/${{ steps.prep.outputs.owner }}/terraria:${{ matrix.variant.tag-suffix }}${{ steps.prep.outputs.date }}
+                      ghcr.io/${{ steps.prep.outputs.owner }}/terraria:${{ matrix.variant.tag-suffix }}-${{ steps.prep.outputs.date }}
                       ghcr.io/${{ steps.prep.outputs.owner }}/terraria:${{ matrix.variant.tag-suffix }}
-                      ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_REGISTRY_NAMESPACE }}/terraria:${{ matrix.variant.tag-suffix }}${{ steps.prep.outputs.date }}
+                      ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_REGISTRY_NAMESPACE }}/terraria:${{ matrix.variant.tag-suffix }}-${{ steps.prep.outputs.date }}
                       ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_REGISTRY_NAMESPACE }}/terraria:${{ matrix.variant.tag-suffix }}
                   cache-from: type=gha,scope=${{ matrix.variant.name }}
                   cache-to: type=gha,mode=max,scope=${{ matrix.variant.name }}
