@@ -24,7 +24,7 @@
         {
             "key": "official",
             "name": "官方原版",
-            "tag": "latest",
+            "tag": "1.4.5.8",
             "container": "terraria-server",
             "resources": {
                 "volumes": [
@@ -40,7 +40,7 @@
         {
             "key": "tshock",
             "name": "TShock 插件服",
-            "tag": "tshock-latest",
+            "tag": "tshock-1.4.5.6",
             "container": "terraria-tshock-server",
             "resources": {
                 "volumes": [
