@@ -22,10 +22,10 @@ jobs:
             matrix:
                 variant:
                     - name: official
-                      dir: ./1.4.5.6/official
+                      dir: ./vanilla-1.4.5.8
                       tag-suffix: ""
                     - name: tshock
-                      dir: ./1.4.5.6/tshock
+                      dir: ./tshock-1.4.5.6
                       tag-suffix: "tshock-"
 
         steps:
@@ -64,9 +64,9 @@ jobs:
                   push: true
                   provenance: false
                   tags: |
-                      ghcr.io/${{ steps.prep.outputs.owner }}/terraria:${{ matrix.variant.tag-suffix }}latest
                       ghcr.io/${{ steps.prep.outputs.owner }}/terraria:${{ matrix.variant.tag-suffix }}${{ steps.prep.outputs.date }}
-                      ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_REGISTRY_NAMESPACE }}/terraria:${{ matrix.variant.tag-suffix }}latest
+                      ghcr.io/${{ steps.prep.outputs.owner }}/terraria:${{ matrix.variant.tag-suffix }}latest
                       ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_REGISTRY_NAMESPACE }}/terraria:${{ matrix.variant.tag-suffix }}${{ steps.prep.outputs.date }}
+                      ${{ secrets.ALIYUN_REGISTRY }}/${{ secrets.ALIYUN_REGISTRY_NAMESPACE }}/terraria:${{ matrix.variant.tag-suffix }}latest
                   cache-from: type=gha,scope=${{ matrix.variant.name }}
                   cache-to: type=gha,mode=max,scope=${{ matrix.variant.name }}

@@ -1,15 +1,18 @@
 # =================
 # 资源下载
 # =================
-FROM alpine:3 AS downloader
+FROM alpine:3 AS download
 
 RUN apk add --no-cache \
     wget \
     unzip
 
-WORKDIR /downloads
-RUN wget -q https://www.terraria.org/api/download/pc-dedicated-server/terraria-server-1456.zip \
-    && unzip ./terraria-server-1456.zip
+WORKDIR /download
+RUN wget -q https://www.terraria.org/api/download/pc-dedicated-server/terraria-server-1458.zip \
+    && unzip ./terraria-server-1458.zip \
+    && rm -rf ./terraria-server-1458.zip
+RUN chmod +x ./1458/Linux/TerrariaServer \
+    && chmod +x ./1458/Linux/TerrariaServer.bin.x86_64
 
 # ===================
 # 主镜像
@@ -20,12 +23,10 @@ ENV TZ=Asia/Shanghai
 
 RUN groupadd -g 1000 gamesrv \
     && useradd -u 1000 -g gamesrv -m -s /bin/bash gamesrv
-RUN mkdir -p /app && chown 1000:1000 /app
+RUN mkdir -p /app/world && chown 1000:1000 /app/world
 
-COPY --from=downloader --chown=1000:1000 ["/downloads/1456/Linux", "/app"]
+COPY --from=download --chown=1000:1000 ["/download/1458/Linux", "/app"]
 COPY --chown=1000:1000 ["./patch/", "/app"]
-RUN chmod +x /app/TerrariaServer \
-    && chmod +x /app/TerrariaServer.bin.x86_64
 
 EXPOSE 7777/tcp
 
